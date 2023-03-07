@@ -1,4 +1,4 @@
-const database = require("../../database/DataBase");
+const {getPool} = require("../../database/DataBase");
 const path = require("path");
 const { validationResult } = require("express-validator");
 const { RESPONSE_CODE, RESPONSE_FIELD } = require("../../common/ResponseConst");
@@ -15,7 +15,7 @@ const signUp = async (req, res) => {
   const email = req.body.email;
   const params = { email: email };
   const selectQuery = myBatisMapper.getStatement("USER", "selectUser", params);
-  const pool = await database.getPool();
+  const pool = await getPool();
   if (pool) {
     try {
       const [row] = await pool.query(selectQuery);
@@ -49,7 +49,7 @@ const logIn = async (req, res) => {
   const selectQuery = myBatisMapper.getStatement("USER", "selectUser", {
     email: req.body.email,
   });
-  const pool = await database.getPool();
+  const pool = await getPool();
   try {
     const [rows] = await pool.query(selectQuery);
     if (rows) {

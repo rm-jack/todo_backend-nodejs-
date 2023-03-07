@@ -1,4 +1,4 @@
-const database = require("../../database/DataBase");
+const { getPool } = require("../../database/DataBase");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
@@ -18,7 +18,7 @@ const getAll = async (req, res) => {
         const getTodoQuery = myBatisMapper.getStatement("TODO", "selectTodo", {
           userid: userid,
         });
-        const pool = await database.getPool();
+        const pool = await getPool();
         const [rows] = await pool.query(getTodoQuery);
         res.json({ ...RESPONSE_CODE.SUCCESS, rows: rows });
       } catch (e) {
@@ -51,7 +51,7 @@ const createTodo = async (req, res) => {
             userid: userid,
           }
         );
-        const pool = await database.getPool();
+        const pool = await getPool();
         const [rows] = await pool.query(insertTodoQuery);
         res.json({ ...RESPONSE_CODE.SUCCESS, rows: rows });
       } catch (e) {
@@ -87,7 +87,7 @@ const setTodo = async (req, res) => {
           "updateTodo",
           params
         );
-        const pool = await database.getPool();
+        const pool = await getPool();
         const [rows] = await pool.query(updateTodoQuery);
         res.json({ ...RESPONSE_CODE.SUCCESS, rows: rows });
       } catch (e) {
@@ -121,7 +121,7 @@ const deleteTodo = async (req, res) => {
           "deleteTodo",
           params
         );
-        const pool = await database.getPool();
+        const pool = await getPool();
         const [rows] = await pool.query(deleteTodoQuery);
         res.json({ ...RESPONSE_CODE.SUCCESS, rows: rows });
       } catch (e) {

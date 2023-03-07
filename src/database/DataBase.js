@@ -43,4 +43,4 @@ const getPool = async () => {
 
   return pool;
 };
-module.exports.getPool = getPool;
+module.exports = {getPool};
