@@ -32,11 +32,10 @@ const signUp = async (req, res) => {
       });
       const result = await pool.query(insertQuery);
       if (result) {
-        console.log(result);
         res.json(RESPONSE_CODE.SUCCESS);
       }
     } catch (e) {
-      console.log(e);
+      res.json(RESPONSE_CODE.DB_ERROR);
     }
   }
 };
@@ -61,19 +60,19 @@ const logIn = async (req, res) => {
         const payLoad = {
           email: rows[0].email,
           name: rows[0].name,
-          id: rows[0].id
+          id: rows[0].id,
         };
         const token = jwt.sign({ data: payLoad }, process.env.SECRET_KEY, {
           expiresIn: process.env.EXPIRE_MIN,
           issuer: process.env.ISSUER,
         });
-        res.json({ token: token });
+        res.json({ ...RESPONSE_CODE.SUCCESS, token: token });
       }
     } else {
       res.json(RESPONSE_CODE.NO_DATA);
     }
   } catch (e) {
-    console.log(e);
+    res.json(RESPONSE_CODE.DB_ERROR);
   }
 };
 
