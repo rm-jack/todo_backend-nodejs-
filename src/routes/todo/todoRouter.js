@@ -1,22 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator");
-const todoController = require("../../controller/todo/todoController");
+const {getAll, setTodo, createTodo, deleteTodo} = require("../../controller/todo/todoController");
 
-router.get("/", todoController.getAll);
+router.get("/", getAll);
 router.post(
   "/",
   body("content").notEmpty().isString(),
   body("userid").notEmpty(),
-  todoController.createTodo
+  createTodo
 );
 router.patch(
   "/:id",
   body("content").isString(),
   body("status").isInt(),
   body("userid").notEmpty(),
-  todoController.setTodo
+  setTodo
 );
-router.delete("/:id", todoController.deleteTodo);
+router.delete("/:id", deleteTodo);
 
 module.exports = router;

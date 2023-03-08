@@ -1,4 +1,4 @@
-const {getPool} = require("../../database/DataBase");
+const { getPool } = require("../../database/DataBase");
 const path = require("path");
 const { validationResult } = require("express-validator");
 const { RESPONSE_CODE, RESPONSE_FIELD } = require("../../common/ResponseConst");
@@ -76,5 +76,4 @@ const logIn = async (req, res) => {
   }
 };
 
-module.exports.signUp = signUp;
-module.exports.logIn = logIn;
+module.exports = { signUp, logIn };
